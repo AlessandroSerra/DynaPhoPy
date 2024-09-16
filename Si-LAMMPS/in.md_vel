@@ -1,0 +1,34 @@
+units		            metal
+
+boundary	          p p p
+
+box                 tilt large
+
+atom_style          atomic
+
+read_data           si-sc.data
+
+mass                1 28.084
+
+pair_style          sw
+pair_coeff          * * Si.sw Si
+
+variable            t equal ${temp}
+
+neighbor	          0.3 bin
+
+timestep            0.001
+
+thermo_style        custom step etotal temp vol press
+thermo              1000
+
+velocity            all create ${temp} 3627941 dist gaussian mom yes
+velocity            all scale ${temp}
+
+fix                 int all nvt temp ${temp} ${temp} 1.0
+
+run                 10000
+dump                dynaphopy all custom 1 si${temp}k.lammpstrj vx vy vz
+dump_modify         dynaphopy sort id
+
+run                 50000

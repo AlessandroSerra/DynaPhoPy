@@ -31,7 +31,7 @@ $ phonopy --fc-calc FORCE_SETS --writefc --full-fc -v
 
 7. Generate the new force constant (finite temperature):
 
-$ dynaphopy input-si si300k.lammpstrj -sfc FORCE_CONSTANTS_300K --MD_commensurate -psm 1
+$ dynaphopy input-si si300k.lammpstrj -sfc FORCE_CONSTANTS_300K --MD_commensurate -psm 1 -ts 0.001
 
 8. Create phonopy config files (band.conf) as in the pdf guide
 

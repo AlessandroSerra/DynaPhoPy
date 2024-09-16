@@ -1,0 +1,48 @@
+##############################################################################
+# Example: Silicon @ 300K                                                    #
+# -------------------------------------------------------------------------- #
+# Calculation of anharmonic properties of Si using LAMMPS MD                 #
+##############################################################################
+
+1. Generate the MD initial crystal structure for LAMMPS from a POSCAR type 
+   file (input-si contains only the path to the POSCAR file):
+
+$ dynaphopy input-si --dim 1 1 1 c_lammps si.data
+
+2. Generate supercell files and displacements using phonopy:
+
+$ phonopy --lammps -c si.data -d --dim="2 2 2"
+
+3. Run the script run.sh to perform forces calculation:
+
+$ ./run.sh
+
+4. Generate the force sets from the forces dump files:
+
+$ phonopy -f force.*
+
+5. Generate the force constants from the force sets file:
+
+$ phonopy --fc-calc FORCE_SETS --writefc --full-fc -v
+
+6. Complete the input file with the path to the force constants file,
+   the primitive matrix, the supercell transform matrix and the
+   k-space path to follow
+
+7. Generate the new force constant (finite temperature):
+
+$ dynaphopy input-si si300k.lammpstrj -sfc FORCE_CONSTANTS_300K --MD_commensurate -psm 1
+
+8. Create phonopy config files (band.conf) as in the pdf guide
+
+9. Generate the band.yaml file:
+
+$ phonopy --dim="2 2 2" -c si-POSCAR band.conf
+
+10a. Plot the phonon bands
+
+$ phonopy-bandplot band.yaml
+
+10b. Convert the yaml file to a txt file:
+
+$ phonopy-bandplot --gnuplot band.yaml > band.dat

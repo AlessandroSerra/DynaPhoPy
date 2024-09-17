@@ -11,4 +11,4 @@ Refer to the [DynaPhoPy Guide](DynaPhoPy.pdf) for instructions on how to install
 The [Si Calculation](Si-LAMMPS/) directory contains input files and instructions for running a phonon calculation for Silicon.
 
 ### 3. Gallium Nitride Calculation Example
-The [GaN Calculation](Si-LAMMPS/) directory contains input files and instructions for running a phonon calculation for the bi-atomic compound Gallium Nitride.
+The [GaN Calculation](GaN-LAMMPS/) directory contains input files and instructions for running a phonon calculation for the bi-atomic compound Gallium Nitride.

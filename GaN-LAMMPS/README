@@ -1,0 +1,54 @@
+##############################################################################
+# Example: GAN @ 1000K                                                       #
+# -------------------------------------------------------------------------- #
+# Calculation of anharmonic properties of GaN using LAMMPS MD                #
+##############################################################################
+
+1. Generate the MD initial crystal structure for LAMMPS from a POSCAR type 
+   file (input-si contains only the path to the POSCAR file):
+
+$ dynaphopy input-gan --dim 1 1 1 c_lammps gan.data
+
+2. Generate supercell files and displacements using phonopy:
+
+$ phonopy --lammps -c gan.data -d --dim="2 2 2"
+
+3. Run the script run.sh to perform forces calculation:
+
+$ ./run.sh
+
+4. Generate the force sets from the forces dump files:
+
+$ phonopy -f force.*
+
+5. Generate the force constants from the force sets file:
+
+$ phonopy --fc-calc FORCE_SETS --writefc --full-fc -v
+
+6. Complete the input file with the path to the force constants file,
+   the primitive matrix, the supercell transform matrix and the
+   k-space path to follow
+
+7. Run the in.md_vel to obtain the trajectories:
+
+$ mpirun -np 10 lmp_mpi -in in.md_vel -var temp 300 | tee out.md_vel
+
+8. Generate the new force constant (finite temperature):
+
+$ dynaphopy input-gan gan1000k.lammpstrj -sfc FORCE_CONSTANTS_300K --MD_commensurate -psm 3 -ts 0.001
+
+NB: 1000k is too high for Max Entropy Method, use Fourier Expansion instead (-psm 3)
+
+9. Create phonopy config files (band.conf) as in the pdf guide
+
+10. Generate the band.yaml file:
+
+$ phonopy --dim="2 2 2" -c gan-POSCAR band.conf
+
+11a. Plot the phonon bands
+
+$ phonopy-bandplot band.yaml
+
+11b. Convert the yaml file to a txt file:
+
+$ phonopy-bandplot --gnuplot band.yaml > band.dat

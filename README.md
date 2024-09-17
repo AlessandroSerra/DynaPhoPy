@@ -12,3 +12,7 @@ The [Si Calculation](Si-LAMMPS/) directory contains input files and instructions
 
 ### 3. Gallium Nitride Calculation Example
 The [GaN Calculation](GaN-LAMMPS/) directory contains input files and instructions for running a phonon calculation for the bi-atomic compound Gallium Nitride.
+
+---
+
+Created and maintained by Alessandro Serra (2024) - DSF @ University of Cagliari

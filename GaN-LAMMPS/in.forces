@@ -1,0 +1,15 @@
+units metal
+
+read_data supercell-00${iter}
+
+
+mass 2        69.7230000000
+mass 1        14.0067000000
+
+
+pair_style  tersoff
+pair_coeff * * GaN.tersoff Ga N
+
+dump phonopy all custom 1 force.${iter} id type x y z fx fy fz
+dump_modify phonopy format line "%d %d %15.8f %15.8f %15.8f %15.8f %15.8f %15.8f"
+run 0

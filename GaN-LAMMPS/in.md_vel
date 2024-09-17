@@ -1,0 +1,33 @@
+units		        metal
+
+boundary	      p p p
+
+box             tilt large
+
+atom_style      atomic
+
+read_data       gan-sc.data
+
+pair_style      tersoff
+pair_coeff      * * GaN.tersoff  Ga N
+
+mass            1 69.7230000000
+mass            2 14.0067000000
+
+neighbor	      0.3 bin
+
+timestep        0.001
+
+thermo_style    custom step etotal temp vol press
+thermo          1000
+
+velocity        all create ${temp} 3627941 dist gaussian mom yes
+velocity        all scale ${temp}
+
+fix             int all nvt temp ${temp} ${temp} 1.0
+
+run             10000
+dump            dynaphopy all custom 1 gan${temp}k.lammpstrj vx vy vz
+dump_modify     dynaphopy sort id
+
+run             50000

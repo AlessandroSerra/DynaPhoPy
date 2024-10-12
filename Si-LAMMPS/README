@@ -29,24 +29,28 @@ $ phonopy --fc-calc FORCE_SETS --writefc --full-fc -v
    the primitive matrix, the supercell transform matrix and the
    k-space path to follow
 
-7. Run the in.md_vel to obtain the trajectories:
+7. Create supercell file to run the MD simulation:
+
+$ dynaphopy input-si --dim 2 2 2 -c_lammps si-sc.data
+
+8. Run the in.md_vel to obtain the trajectories:
 
 $ mpirun -np 10 lmp_mpi -in in.md_vel -var temp 300 | tee out.md_vel
 
-8. Generate the new force constant (finite temperature):
+9. Generate the new force constant (finite temperature):
 
 $ dynaphopy input-si si300k.lammpstrj -sfc FORCE_CONSTANTS_300K --MD_commensurate -psm 1 -ts 0.001
 
-9. Create phonopy config files (band.conf) as in the pdf guide
+10. Create phonopy config files (band.conf) as in the pdf guide
 
-10. Generate the band.yaml file:
+11. Generate the band.yaml file:
 
 $ phonopy --dim="2 2 2" -c si-POSCAR band.conf
 
-11a. Plot the phonon bands
+12a. Plot the phonon bands
 
 $ phonopy-bandplot band.yaml
 
-11b. Convert the yaml file to a txt file:
+12b. Convert the yaml file to a txt file:
 
 $ phonopy-bandplot --gnuplot band.yaml > band.dat

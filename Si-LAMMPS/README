@@ -7,7 +7,7 @@
 1. Generate the MD initial crystal structure for LAMMPS from a POSCAR type 
    file (input-si contains only the path to the POSCAR file):
 
-$ dynaphopy input-si --dim 1 1 1 c_lammps si.data
+$ dynaphopy input-si --dim 1 1 1 -c_lammps si.data
 
 2. Generate supercell files and displacements using phonopy:
 
